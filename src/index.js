@@ -4249,6 +4249,8 @@ function handleVideo(isMobile) {
 				node.setAttribute("src", src);
 			} */
 
+			console.log('new version');
+
 			var array = [];
 			document.querySelectorAll(".source-lg").forEach(source => {
 				var src = source.getAttribute("data-large-src")
