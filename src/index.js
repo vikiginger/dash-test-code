@@ -4249,7 +4249,37 @@ function handleVideo(isMobile) {
 				node.setAttribute("src", src);
 			} */
 
-			console.log('new version 6');
+			console.log('new version 7');
+
+			var queue = new createjs.LoadQueue(true);
+			var videosTarget = null;
+
+			queue.on("fileload", function(event) {
+				console.log(event);
+				videosTarget = event.result;
+			});
+
+			queue.loadFile({
+				id : 'mp4',
+				src : 'https://voolatech.github.io/banner/vpaid/videos/video.mp4',     type : createjs.AbstractLoader.BINARY
+			});
+
+			queue.load();
+
+			queue.on("complete", function(){
+				var $video = $('<video controls autoplay loop playsinline />');
+				var $source = $('<source type="video/mp4"/>');
+				var src = videosTarget;
+
+				var blob = new Blob( [ src ], { type: "video/mp4" } );
+				var urlCreator = window.URL || window.webkitURL;
+				var objUrl = urlCreator.createObjectURL( blob );
+
+				$source.attr('src', objUrl);
+				$video.append($source);
+			
+				$('body').append($video);
+			});
 
 			var array = [];
 			document.querySelectorAll(".source-lg").forEach(source => {
