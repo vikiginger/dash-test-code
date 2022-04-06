@@ -4249,7 +4249,7 @@ function handleVideo(isMobile) {
 				node.setAttribute("src", src);
 			} */
 
-			console.log('new version');
+			console.log('new version 2');
 
 			var array = [];
 			document.querySelectorAll(".source-lg").forEach(source => {
