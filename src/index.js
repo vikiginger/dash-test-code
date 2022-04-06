@@ -4250,6 +4250,7 @@ function handleVideo(isMobile) {
 			} */
 
 			console.log('new version 2');
+			console.log('new version 5');
 
 			var array = [];
 			document.querySelectorAll(".source-lg").forEach(source => {
