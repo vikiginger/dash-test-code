@@ -4249,8 +4249,7 @@ function handleVideo(isMobile) {
 				node.setAttribute("src", src);
 			} */
 
-			console.log('new version 2');
-			console.log('new version 5');
+			console.log('new version 6');
 
 			var array = [];
 			document.querySelectorAll(".source-lg").forEach(source => {
@@ -4263,36 +4262,33 @@ function handleVideo(isMobile) {
 				var item = {
 					src: url,
 					id: url,
-			    	type: createjs.AbstractLoader.BINARY
-				//	type: "video"
+			    //	type: createjs.AbstractLoader.BINARY
+					type: "video"
 				};
-				loadArray.push(item)
+				loadArray.push(item);
 			});
 			var preload;
-			var videosTarget = null;
 			function init() {
 				preload = new createjs.LoadQueue(true);
-				preload.on("fileload", function(event) {
-					videosTarget = event.result;
-				});
+				preload.on("fileload", handleFileLoaded);
 				preload.loadManifest(loadArray);
-				preload.load();
-				preload.on("complete", function(event) {
-					var item = event.item;
-					var id = item.id;
-					var src = videosTarget;
-					var blob = new Blob( [src], { "type": "video\/mp4" });
-					var url = URL.createObjectURL(blob);
-					document.querySelectorAll(".source-lg").forEach(source => {
-					
+			}
+			function handleFileLoaded(event) {
+				var item = event.item;
+				var id = item.id;
+				var raw = preload.getResult(id, false);
+				var blob = new Blob([raw], {
+						type: "video/mp4"
+					}),
+					url = URL.createObjectURL(blob)
+				document.querySelectorAll(".source-lg").forEach(source => {
 					const node = document.createElement("source");
-					node.setAttribute("type", "video/mp4");
 					var src = source.getAttribute("data-large-src")
-						if (id == src) {
-							node.setAttribute("src", url);
-							source.parentElement.appendChild(node);
-						}
-					});
+					node.setAttribute("type", 'video/mp4');
+					if (id == src) {
+						source.parentElement.appendChild(node);
+						node.setAttribute("src", url);
+					}
 				});
 			}
 		init();
