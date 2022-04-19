@@ -9,11 +9,14 @@ module.exports = {
 	watch: true,
 	entry: './src/app.js',
 	output: {
-		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].[contenthash].js',
 	},
 	mode: 'production',
 	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
 		usedExports: true,
 		minimize: true,
 		minimizer: [
